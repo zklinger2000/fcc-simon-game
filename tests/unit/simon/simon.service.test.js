@@ -75,16 +75,20 @@ describe('Game module', function() {
     beforeEach(module('Game'));
     
     // tests go here
-    var gameManager; // instance of GameManager
+    var game; // instance of GameManager
     beforeEach(inject(function(GameManager) {
-      gameManager = GameManager;
+      game = GameManager;
     }));
-    
-    it('should return object of type array', function () {
-      // call the function on our service instance
-      var grid = gameManager.grid;
 
-      expect(Array.isArray(grid)).toBe(true);
+    describe('grid', function() {
+
+      it('should return object of type array', function () {
+        // call the function on our service instance
+        var grid = game.grid;
+
+        expect(Array.isArray(grid)).toBe(true);
+      });
+
     });
 
   });
