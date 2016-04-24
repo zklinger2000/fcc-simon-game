@@ -13,16 +13,24 @@ angular.module('Game', ['Grid'])
   
   // METHODS
   
-  // Start a new game
-  this.startGame = function() {
-//    GridService.buildSimon();
-    this.reinit();
-  };
   // Create a new game
   this.reinit = function() {
     this.gameOver = false;
     this.timeout = false;
     this.currentLevel = '--';
+    this.isOn = false;
+    this.strict = false;
+  };
+  this.turnOff = function() {
+    this.reinit();
+  }
+  this.turnOn = function() {
+    this.reinit();
+    this.isOn = true;
+  }
+  // Start a new game
+  this.startGame = function() {
+//    GridService.buildSimon();
   };
   // Handle the push click action
   this.panelClick = function(panel) {};

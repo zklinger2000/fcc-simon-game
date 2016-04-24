@@ -50,6 +50,8 @@ describe('simonApp module', function () {
         expect(vm.game.gameOver).toEqual(false);
         expect(vm.game.timeout).toEqual(false);
         expect(vm.game.currentLevel).toEqual('--');
+        expect(vm.game.isOn).toEqual(false);
+        expect(vm.game.strict).toEqual(false);
       }); 
 
     });
