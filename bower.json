@@ -1,0 +1,21 @@
+{
+  "name": "fcc-simon-game",
+  "description": "",
+  "main": "app/index.html",
+  "authors": [
+    "Zack Klinger <zklinger@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zklinger2000/fcc-simon-game",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular-mocks": "~1.4.0",
+    "angular": "~1.4.0"
+  }
+}
