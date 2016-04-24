@@ -1,11 +1,25 @@
+'use strict';
+
 // create a new module
 angular.module('simonApp', ['Game'])
 .controller('GameController', function(GameManager) {
   this.game = GameManager;
 });
 
-angular.module('Game', [])
-.service('GameManager', function() {
+angular.module('Game', ['Grid'])
+.service('GameManager', function(GridService) {
+  this.grid = GridService.grid;
+  
+  this.newGame = function() {
+    GridService.buildSimon();
+    this.reinit();
+  };
+  
+  this.reinit = function() {
+    this.gameOver = false;
+    this.timeout = false;
+    this.currentLevel = '--';
+  };
   // Create a new game
   this.reset = function() {};
   // Handle the move action
@@ -39,4 +53,6 @@ angular.module('Grid', [])
    
     return newGrid;
   };
+  // initialize grid
+  this.grid = this.reset();
 });

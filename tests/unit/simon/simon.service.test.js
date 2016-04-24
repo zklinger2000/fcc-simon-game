@@ -15,13 +15,6 @@ describe('Grid service', function () {
     expect(Array.isArray(grid)).toBe(true);
   });
 
-  it('should default to an empty array', function () {
-    // call the function on our service instance
-    var grid = service.grid;
-
-    expect(grid).toEqual([]);
-  });
-
   it('should return an array of objects with color values', function () {
     // call the function on our service instance
     var grid = service.reset();
@@ -32,6 +25,16 @@ describe('Grid service', function () {
     expect(grid[3].color).toEqual('blue');
   });
 
+  it('should default to an array of objects with color values', function () {
+    // call the function on our service instance
+    var grid = service.grid;
+
+    expect(grid[0].color).toEqual('green');
+    expect(grid[1].color).toEqual('red');
+    expect(grid[2].color).toEqual('yellow');
+    expect(grid[3].color).toEqual('blue');
+  });
+  
   it('should return an array of objects with isActive set to false', function () {
     // call the function on our service instance
     var grid = service.reset();
