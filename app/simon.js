@@ -13,19 +13,16 @@ angular.module('Game', ['Grid'])
   
   // METHODS
   
-  // Create a new game
-  this.reinit = function() {
+  this.turnOff = function() {
     this.gameOver = false;
     this.timeout = false;
-    this.currentLevel = '--';
+    this.currentLevel = '  ';
     this.isOn = false;
     this.strict = false;
-  };
-  this.turnOff = function() {
-    this.reinit();
   }
+  // Create a new game
   this.turnOn = function() {
-    this.reinit();
+    this.currentLevel = '--';
     this.isOn = true;
   }
   // Start a new game
@@ -38,7 +35,7 @@ angular.module('Game', ['Grid'])
   this.updateRound = function() {};
 
   // INITIALIZE
-  this.reinit();
+  this.turnOff();
 });
 
 // register the Grid module

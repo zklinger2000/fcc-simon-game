@@ -91,5 +91,33 @@ describe('Game module', function() {
 
     });
 
+    describe('turnOff', function() {
+
+      it('should reset game state values', function () {
+        // call the function on our service instance
+        game.turnOff();
+        expect(game.gameOver).toEqual(false);
+        expect(game.timeout).toEqual(false);
+        expect(game.currentLevel).toEqual('  ');
+        expect(game.isOn).toEqual(false);
+        expect(game.strict).toEqual(false);
+      });
+
+    });
+
+    describe('turnOn', function() {
+
+      it('should show correct game state values', function () {
+        // call the function on our service instance
+        game.turnOn();
+        expect(game.gameOver).toEqual(false);
+        expect(game.timeout).toEqual(false);
+        expect(game.currentLevel).toEqual('--');
+        expect(game.isOn).toEqual(true);
+        expect(game.strict).toEqual(false);
+      });
+
+    });
+
   });
 });
