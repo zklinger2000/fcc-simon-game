@@ -11,13 +11,13 @@
 </head>
 <body ng-app="simonApp">
   <!-- header -->
-  <div id="content" ng-controller='GameController as ctrl'>
+  <div id="content" ng-controller='GameController as vm'>
     <div id="heading" class="row">
       <h1 class="title">Simon</h1>
       <div id="game">
         <div class="grid-container">
           <div class="grid-cell" 
-            ng-repeat="panel in ctrl.game.grid track by $index">
+            ng-repeat="panel in vm.game.grid track by $index">
             {{ panel.color }}
           </div>
         </div>

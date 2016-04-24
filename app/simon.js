@@ -3,7 +3,8 @@
 // create a new module
 angular.module('simonApp', ['Game'])
 .controller('GameController', function(GameManager) {
-  this.game = GameManager;
+  var vm = this;
+  vm.game = GameManager;
 });
 
 angular.module('Game', ['Grid'])
