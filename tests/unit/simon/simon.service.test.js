@@ -1,3 +1,25 @@
+describe('Grid panel factory', function () {
+  
+  beforeEach(module('Grid'));
+
+  var panel;
+  // Get the Panel factory from the injector
+  beforeEach(inject(function GetDependencies(PanelModel) {
+    panel = new PanelModel('red', true);
+  }));
+
+  it('should be an object with color set to "red"', function () {
+
+    expect(panel.color).toEqual('red');
+  });
+
+  it('should be an object with isActive set to false', function () {
+
+    expect(panel.isActive).toEqual(true);
+  });
+
+});
+         
 describe('Grid service', function () {
   
   beforeEach(module('Grid'));
@@ -57,6 +79,13 @@ describe('Game module', function() {
     beforeEach(inject(function(GameManager) {
       gameManager = GameManager;
     }));
+    
+    it('should return object of type array', function () {
+      // call the function on our service instance
+      var grid = gameManager.grid;
+
+      expect(Array.isArray(grid)).toBe(true);
+    });
 
   });
 });
