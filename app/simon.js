@@ -10,24 +10,26 @@ angular.module('Game', ['Grid'])
 .service('GameManager', function(GridService) {
   this.grid = GridService.grid;
   
-  this.newGame = function() {
-    GridService.buildSimon();
+  // METHODS
+  
+  // Start a new game
+  this.startGame = function() {
+//    GridService.buildSimon();
     this.reinit();
   };
-  
+  // Create a new game
   this.reinit = function() {
     this.gameOver = false;
     this.timeout = false;
     this.currentLevel = '--';
   };
-  // Create a new game
-  this.reset = function() {};
-  // Handle the move action
-  this.move = function() {};
-  // Update the score
-  this.updateScore = function(newScore) {};
-  // Are there moves left?
-  this.movesAvailable = function() {};
+  // Handle the push click action
+  this.panelClick = function(panel) {};
+  // Update the round number
+  this.updateRound = function() {};
+
+  // INITIALIZE
+  this.reinit();
 });
 
 // register the Grid module
@@ -44,6 +46,10 @@ angular.module('Grid', [])
 // Grid service
 .service('GridService', function(PanelModel) {
   this.grid = [];
+  
+  // METHODS
+  
+  // Reset the grid
   this.reset = function() {
     var newGrid = [];
     newGrid.push(new PanelModel('green', false));
@@ -53,6 +59,7 @@ angular.module('Grid', [])
    
     return newGrid;
   };
-  // initialize grid
+  
+  // INITIALIZE
   this.grid = this.reset();
 });
