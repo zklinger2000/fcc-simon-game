@@ -5,6 +5,203 @@
 *, *:before, *:after {
   box-sizing: border-box;
 }
+.controls-container {
+  color: #111;
+  background: #ccc;
+  display: inline-block;
+  border: 15px solid #222;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: calc(50vw - 150px);
+  top: calc(50vh - 150px);
+  z-index: 10;
+  box-shadow: 0 0 10px 5px #222;
+}
+.controls-container p {
+  text-align: center;
+  margin: 0;
+}
+.game-logo {
+  text-align: center;
+  font-family: 'Alegreya', serif;
+  font-size: 4em;
+  line-height: 0em;
+  font-style: italic;
+/*  height: 60px;*/
+  margin: 0;
+  padding: 1.2em 0.15em 0 0;
+}
+.display-container p, .start-container p, .strict-container p, .on-off-container p {
+  font-family: 'Arimo', sans-serif;
+}
+.display-container, .start-container, .strict-container {
+  padding: 0 0.5em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.start-container {
+  padding-top: 1em;
+}
+.on-off-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+.on-off-container p, .on-off-slide {
+  align-self: center;
+}
+.on-off-container p {
+  margin: 0 .5em;
+}
+.on-off-slide {
+  width: 60px;
+  height: 24px;
+  padding: 2px;
+  background: #222;
+  border-radius: 5px;
+}
+.on-off-switch {
+  width: 30px;
+  height: 20px;
+  background: #2244dd;
+  border-radius: 5px;
+  margin: 0 3px;
+  box-shadow: inset 0 0 6px 1px #000044;
+}
+.on-off-switch.is-on {
+  margin: 0 24px;
+}
+.current-level {
+  color: #552222;
+  text-align: center;
+  font-size: 1.7em;
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.7em;
+  background: #222;
+  height: 1.7em;
+  width: 2.3em;
+  margin-bottom: 0.5em;
+  border-radius: 10px;
+/*  z-index: 11;*/
+}
+.current-level.is-on {
+  color: red;
+  text-shadow: 0 0 15px red;
+}
+.strict-mode {
+  height: 10px;
+  width: 10px;
+  padding: 0;
+  margin: 5px 0;
+  align-self: center;
+  border-radius: 50%;
+  background: #94942b;
+  box-shadow: inset 0 0 5px 1px #111111, 0 0 0 yellow;
+}
+.strict {
+  background: yellow;
+  box-shadow: inset 0 0 5px 0 #888800, 0 0 8px yellow;
+}
+.btn {
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  border: 5px solid grey;
+  background: #e42b2b;
+  margin: .25em .35em 0.5em;
+  box-shadow: inset -2px -2px 2px #222, inset 0 0 0 #222;
+  align-self: center;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn:active {
+  background: #942b2b;
+  box-shadow: inset -1px -1px 2px #222, inset 1px 1px 2px #222;
+}
+.on-off-container {
+/*  flex: 1 0 150px;*/
+}
+/* Panels and body */
+
+.grid-container {
+  margin: 0;
+  padding: 0;
+  border: 30px solid #222;
+  border-radius: 50%;
+  width: 600px;
+  height: 600px;
+  position: absolute;
+  left: calc(50vw - 300px);
+  top: calc(50vh - 300px);
+}
+.panel {
+  box-shadow: 0 0 0 green, inset 0 0 15px 5px black;
+}
+.panel:hover {
+  cursor: pointer;
+}
+.panel:nth-child(1) {
+  background: #26cb26;
+  border-top-left-radius: 100%;
+  border-bottom: 15px solid #222;
+  border-right: 15px solid #222;
+}
+.panel:nth-child(1):active, .panel:nth-child(1).active {
+  background: #00ff00;
+  box-shadow: -8px -8px 20px green, inset 0 0 15px 5px black;
+}
+.panel:nth-child(2) {
+  background: #942b2b;
+  border-top-right-radius: 100%;
+  border-bottom: 15px solid #222;
+  border-left: 15px solid #222;
+}
+.panel:nth-child(2):active, .panel:nth-child(2).active {
+  background: red;
+  box-shadow: 8px -8px 20px #882222, inset 0 0 15px 5px black;
+}
+.panel:nth-child(3) {
+  background: #94942b;
+  border-bottom-left-radius: 100%;
+  border-top: 15px solid #222;
+  border-right: 15px solid #222;
+}
+.panel:nth-child(3):active, .panel:nth-child(3).active {
+  background: #dddd22;
+  box-shadow: -8px 8px 20px #888822, inset 0 0 15px 5px black;
+}
+.panel:nth-child(4) {
+  background: #0909c6;
+  border-bottom-right-radius: 100%;
+  border-top: 15px solid #222;
+  border-left: 15px solid #222;
+}
+.panel:nth-child(4):active, .panel:nth-child(4).active {
+  background: #4444ff;
+  box-shadow: 8px 8px 20px #2222aa, inset 0 0 15px 5px black;
+}
+
+/* Flexbox */
+
+.grid-container, .controls-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.game-logo {
+  flex: 1 0 270px;
+}
+.count {
+/*  padding: 0;*/
+}
+.panel {
+  flex: 1 0 270px;
+}
 
 
 /*===============

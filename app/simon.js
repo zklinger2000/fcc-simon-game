@@ -14,16 +14,15 @@ angular.module('Game', ['Grid'])
   // METHODS
   
   this.turnOff = function() {
-    this.gameOver = false;
-    this.timeout = false;
-    this.currentLevel = '  ';
     this.isOn = false;
-    this.strict = false;
+    this.currentLevel = '--';
   }
   // Create a new game
   this.turnOn = function() {
-    this.currentLevel = '--';
+    this.gameOver = false;
+    this.timeout = false;
     this.isOn = true;
+    this.strict = false;
   }
   // Start a new game
   this.startGame = function() {

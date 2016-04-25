@@ -96,11 +96,7 @@ describe('Game module', function() {
       it('should reset game state values', function () {
         // call the function on our service instance
         game.turnOff();
-        expect(game.gameOver).toEqual(false);
-        expect(game.timeout).toEqual(false);
-        expect(game.currentLevel).toEqual('  ');
         expect(game.isOn).toEqual(false);
-        expect(game.strict).toEqual(false);
       });
 
     });

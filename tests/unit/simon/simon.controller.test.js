@@ -46,11 +46,11 @@ describe('simonApp module', function () {
       
       it('should reset game state values', function () {
         var vm = $controller('GameController', { GameManager: gameManager });
-        vm.game.turnOff();
+        vm.game.turnOn();
         expect(vm.game.gameOver).toEqual(false);
         expect(vm.game.timeout).toEqual(false);
-        expect(vm.game.currentLevel).toEqual('  ');
-        expect(vm.game.isOn).toEqual(false);
+        expect(vm.game.currentLevel).toEqual('--');
+        expect(vm.game.isOn).toEqual(true);
         expect(vm.game.strict).toEqual(false);
       }); 
 

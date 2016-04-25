@@ -5,20 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <!--  <link rel="icon" type="image/png" href="favicon.png">-->
   <title>Zack Klinger | Web Developer | Portland, OR</title>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<!--  <link rel="stylesheet" href="styles/normalize.css">-->
+  <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <!--  <link rel="stylesheet" href="styles/normalize.css">-->
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body ng-app="simonApp">
   <!-- header -->
   <div id="content" ng-controller='GameController as vm'>
     <div id="heading" class="row">
-      <h1 class="title">Simon</h1>
       <div id="game">
+        <div class="controls-container">
+          <h1 class="game-logo">Simon</h1>
+          <div class="display-container">
+            <div class="current-level">{{ vm.game.currentLevel }}</div>
+            <p class="count">COUNT</p>
+          </div>
+          <div class="start-container">
+            <div class="btn start"></div>
+            <p>START</p>
+          </div>
+          <div class="strict-container">
+            <div class="strict-mode"></div>
+            <div class="btn strict"></div>
+            <p>STRICT</p>
+          </div>
+          <div class="on-off-container">
+            <p>OFF</p>
+            <div class="on-off-slide">
+              <div class="on-off-switch"></div>
+            </div>
+            <p>ON</p>
+          </div>
+        </div>
         <div class="grid-container">
-          <div class="grid-cell" 
+          <div class="panel" 
             ng-repeat="panel in vm.game.grid track by $index">
-            {{ panel.color }}
           </div>
         </div>
       </div>
