@@ -123,8 +123,8 @@
   background: #942b2b;
   box-shadow: inset -1px -1px 2px #222, inset 1px 1px 2px #222;
 }
-.on-off-container {
-/*  flex: 1 0 150px;*/
+.on-off-slide {
+  cursor: pointer;
 }
 /* Panels and body */
 

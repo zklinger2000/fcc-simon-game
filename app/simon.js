@@ -24,6 +24,13 @@ angular.module('Game', ['Grid'])
     this.isOn = true;
     this.strict = false;
   }
+  this.onOffToggle = function() {
+    if (this.isOn) {
+      this.turnOff();
+    } else {
+      this.turnOn();
+    }
+  }
   // Start a new game
   this.startGame = function() {
 //    GridService.buildSimon();

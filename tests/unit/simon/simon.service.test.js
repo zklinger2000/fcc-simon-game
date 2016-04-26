@@ -115,5 +115,28 @@ describe('Game module', function() {
 
     });
 
+    describe('onOffToggle', function() {
+
+      it('should show correct game state values', function () {
+        // call the function on our service instance
+        if (game.isOn) {
+          game.onOffToggle();
+          expect(game.gameOver).toEqual(false);
+          expect(game.timeout).toEqual(false);
+          expect(game.currentLevel).toEqual('--');
+          expect(game.isOn).toEqual(false);
+          expect(game.strict).toEqual(false);
+        } else {
+          game.onOffToggle();
+          expect(game.gameOver).toEqual(false);
+          expect(game.timeout).toEqual(false);
+          expect(game.currentLevel).toEqual('--');
+          expect(game.isOn).toEqual(true);
+          expect(game.strict).toEqual(false);
+        }
+      });
+
+    });
+
   });
 });
