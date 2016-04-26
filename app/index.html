@@ -19,7 +19,7 @@
         <div class="controls-container">
           <h1 class="game-logo">Simon</h1>
           <div class="display-container">
-            <div class="current-level">{{ vm.game.currentLevel }}</div>
+            <div class="current-level" ng-class="{ 'is-on': vm.game.isOn }">{{ vm.game.currentLevel }}</div>
             <p class="count">COUNT</p>
           </div>
           <div class="start-container">
@@ -34,7 +34,7 @@
           <div class="on-off-container">
             <p>OFF</p>
             <div class="on-off-slide" ng-click="vm.game.onOffToggle()">
-              <div class="on-off-switch"></div>
+              <div class="on-off-switch" ng-class="{ 'is-on': vm.game.isOn }"></div>
             </div>
             <p>ON</p>
           </div>

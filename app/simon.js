@@ -13,6 +13,7 @@ angular.module('Game', ['Grid'])
   
   // METHODS
   
+  // Set game state to 'off'
   this.turnOff = function() {
     this.isOn = false;
     this.currentLevel = '--';
@@ -23,7 +24,9 @@ angular.module('Game', ['Grid'])
     this.timeout = false;
     this.isOn = true;
     this.strict = false;
+    // TODO: create color sequence
   }
+  // Toggle game state between on/off
   this.onOffToggle = function() {
     if (this.isOn) {
       this.turnOff();
