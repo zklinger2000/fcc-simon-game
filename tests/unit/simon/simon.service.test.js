@@ -97,6 +97,7 @@ describe('Game module', function() {
         // call the function on our service instance
         game.turnOff();
         expect(game.isOn).toEqual(false);
+        expect(game.isRunning).toEqual(false);
       });
 
     });
@@ -111,6 +112,7 @@ describe('Game module', function() {
         expect(game.currentLevel).toEqual('--');
         expect(game.isOn).toEqual(true);
         expect(game.strict).toEqual(false);
+        expect(game.isRunning).toEqual(false);
       });
 
     });
@@ -134,6 +136,61 @@ describe('Game module', function() {
           expect(game.isOn).toEqual(true);
           expect(game.strict).toEqual(false);
         }
+      });
+
+    });
+
+    describe('sequence', function() {
+
+      it('should be an object of type array', function () {
+        var sequence = game.sequence;
+        // 
+        expect(Array.isArray(sequence)).toBe(true);
+      });
+
+      it('should default to be empty', function () {
+        var sequence = game.sequence;
+        // 
+        expect(sequence.length).toEqual(0);
+      });
+
+    });
+
+    describe('startGame', function() {
+      
+      describe('sequence', function() {
+
+        it('should have a length of 0 if game is not On', function () {
+          game.turnOff();
+          game.startGame();
+          
+          var sequence = game.sequence;
+          // 
+          expect(sequence.length).toEqual(0);
+        });
+
+        it('should have a length of 5 when On', function () {
+          game.turnOn();
+          game.startGame();
+          
+          var sequence = game.sequence;
+          // 
+          expect(sequence.length).toEqual(5);
+        });
+
+      });
+
+      describe('isRunning', function() {
+
+        it('should be true if game is started', function () {
+          game.turnOn();
+          game.startGame();
+          
+          var isRunning = game.isRunning;
+          // 
+          expect(isRunning).toEqual(true);
+        });
+
       });
 
     });

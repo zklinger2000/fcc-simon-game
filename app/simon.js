@@ -10,6 +10,7 @@ angular.module('simonApp', ['Game'])
 angular.module('Game', ['Grid'])
 .service('GameManager', function(GridService) {
   this.grid = GridService.grid;
+  this.sequence = [];
   
   // METHODS
   
@@ -17,6 +18,7 @@ angular.module('Game', ['Grid'])
   this.turnOff = function() {
     this.isOn = false;
     this.currentLevel = '--';
+    this.isRunning = false;
   }
   // Create a new game
   this.turnOn = function() {
@@ -36,12 +38,27 @@ angular.module('Game', ['Grid'])
   }
   // Start a new game
   this.startGame = function() {
-//    GridService.buildSimon();
+    // Disable button if game is off
+    if (!this.isOn) return;
+    // Disable button if game is already running
+    if (this.isRunning) return;
+    // Set game state to isRunning
+    this.isRunning = true;
+    // Create a random sequence
+    buildSequence(this.sequence, 5);
+    console.log(this.sequence);
   };
   // Handle the push click action
   this.panelClick = function(panel) {};
   // Update the round number
   this.updateRound = function() {};
+  
+  // Create a random sequence of numbers between 0 and 3 inclusive
+  function buildSequence(array, size) {
+    for (var i = 0; i < size; i++) {
+      array.push(Math.floor(Math.random() * 4));
+    }
+  }
 
   // INITIALIZE
   this.turnOff();
