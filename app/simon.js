@@ -34,6 +34,9 @@ angular.module('Game', ['Grid'])
   this.onOffToggle = function() {
     if (this.isOn) {
       this.turnOff();
+      $timeout.cancel(stopBlink);
+      $interval.cancel(stopPlayback);
+      this.grid = GridService.reset();
     } else {
       this.turnOn();
     }
@@ -96,18 +99,19 @@ angular.module('Game', ['Grid'])
 
   function blink(panel) {
     panel.isActive = true;
-    $timeout(function() {
+    stopBlink = $timeout(function() {
       panel.isActive = false;
+      $timeout.cancel(stopBlink);
     }, 1000);
   }
   
   function playNext(grid, sequence) {
     var i = 0;
-    var stop = $interval(function() {
+    stopPlayback = $interval(function() {
       blink(grid[sequence[i]]);
       ++i;
       if (i >= sequence.length) {
-        $interval.cancel(stop);
+        $interval.cancel(stopPlayback);
       }
     }, 2000);
   }
