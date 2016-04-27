@@ -8,9 +8,11 @@ angular.module('simonApp', ['Game'])
 });
 
 angular.module('Game', ['Grid'])
-.service('GameManager', function(GridService) {
+.service('GameManager', function(GridService, $interval, $timeout) {
   this.grid = GridService.grid;
   this.sequence = [];
+  var stopPlayback; // $interval promise
+  var stopBlink; // $timeout promise
   
   // METHODS
   
@@ -45,8 +47,37 @@ angular.module('Game', ['Grid'])
     // Set game state to isRunning
     this.isRunning = true;
     // Create a random sequence
-    buildSequence(this.sequence, 5);
-    console.log(this.sequence);
+    this.sequence = buildSequence(5);
+//    console.log(this.sequence);
+    // TODO: Play blinking count
+      // Set current level to 1
+    // TODO: Start Game loop
+    do {
+      this.gameLoop();
+    } while(!this.gameOver);
+  };
+  this.gameLoop = function() {
+    console.log('CALLED: gameLoop');
+    var grid = this.grid;
+    var sequence = this.sequence;
+    // Play sequence up to current level
+    if (this.currentLevel === '--') {
+      this.currentLevel = '01';
+    }
+//    var index = 0;
+    var current = +this.currentLevel;
+    
+    playNext(grid, sequence);
+    // Listen for sequence click
+      // Listen for current index/color
+        // If not correct color
+          // If in strict mode, game over
+          // Else start over
+        // Else if is the correct color
+          // If it's the last item
+            // Update current level
+          // Else, update index to play
+    this.gameOver = true;
   };
   // Handle the push click action
   this.panelClick = function(panel) {};
@@ -54,12 +85,33 @@ angular.module('Game', ['Grid'])
   this.updateRound = function() {};
   
   // Create a random sequence of numbers between 0 and 3 inclusive
-  function buildSequence(array, size) {
+  function buildSequence(size) {
+    var sequence = [];
     for (var i = 0; i < size; i++) {
-      array.push(Math.floor(Math.random() * 4));
+      sequence.push(Math.floor(Math.random() * 4));
     }
+    console.log(sequence);
+    return sequence;
   }
 
+  function blink(panel) {
+    panel.isActive = true;
+    $timeout(function() {
+      panel.isActive = false;
+    }, 1000);
+  }
+  
+  function playNext(grid, sequence) {
+    var i = 0;
+    var stop = $interval(function() {
+      blink(grid[sequence[i]]);
+      ++i;
+      if (i >= sequence.length) {
+        $interval.cancel(stop);
+      }
+    }, 2000);
+  }
+  
   // INITIALIZE
   this.turnOff();
 });
