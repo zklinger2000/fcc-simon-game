@@ -85,6 +85,7 @@ angular.module('Game', ['Grid'])
   };
   // Check results of clicking a panel
   this.checkClick = function(answer, input) {
+    var self = this;
     if (answer === input) {
       console.log('that was correct!');
       if (clickResults.round < this.sequence.length - 1) {
@@ -95,10 +96,15 @@ angular.module('Game', ['Grid'])
         console.log('that was the last color!');
         clickResults.round = 0;
         // TODO: blink round timeout
-        this.newRound();
+        $timeout(function() {
+          self.newRound();
+        }, 2000, self);
       }
     } else {
       console.log('incorrect click!!!');
+      // TODO: blink '!!' and play sound
+      audio[0].play();
+      audio[0].play();
       this.isListening = false;
       if (this.strict) {
         console.log('incorrect click loss!');
