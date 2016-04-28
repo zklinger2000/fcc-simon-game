@@ -11,6 +11,7 @@ angular.module('Game', ['Grid'])
 .service('GameManager', function(GridService, $interval, $timeout) {
   this.grid = GridService.grid;
   this.sequence = [];
+  this.winRound = 20;
   var stopPlayback; // $interval promise
   var stopBlink; // $timeout promise
   var roundTimeout; // $timeout promise
@@ -77,7 +78,8 @@ angular.module('Game', ['Grid'])
     // Play sequence up to current level
     if (this.currentLevel === '--') {
       this.currentLevel = 1;
-    } else {
+    }
+    else {
       // TODO: timeout level change
       ++this.currentLevel;
     }    
@@ -89,11 +91,37 @@ angular.module('Game', ['Grid'])
     var level = self.currentLevel;
     if (answer === input) {
       console.log('that was correct!');
-      if (clickResults.round < self.sequence.length - 1) {
+      if (clickResults.round === self.winRound - 1) {
+        $timeout(function() {
+          self.currentLevel = '!!';
+        }, 500, self);
+        $timeout(function() {
+          self.currentLevel = level;
+        }, 1250, self);
+        $timeout(function() {
+          self.currentLevel = '!!';
+        }, 2000, self);
+        $timeout(function() {
+          self.currentLevel = level;
+        }, 2750, self);
+        $timeout(function() {
+          self.currentLevel = '!!';
+        }, 3500, self);
+        $timeout(function() {
+          self.currentLevel = level;
+        }, 4250, self);
+        $timeout(function() {
+          self.turnOff();
+          self.turnOn();
+          self.startGame();
+        }, 8000, self);
+      }
+      else if (clickResults.round < self.sequence.length - 1) {
         console.log('still another color in sequence');
         self.startListening();
         ++clickResults.round;
-      } else {
+      }
+      else {
         console.log('that was the last color!');
         clickResults.round = 0;
         // TODO: blink round timeout
@@ -107,7 +135,8 @@ angular.module('Game', ['Grid'])
           self.newRound();
         }, 2000, self);
       }
-    } else {
+    }
+    else {
       console.log('incorrect click!!!');
       // TODO: blink '!!' and play sound
       buzzer(self);
@@ -120,9 +149,9 @@ angular.module('Game', ['Grid'])
             self.turnOff();
             self.turnOn();
             self.startGame();
-          }, 3000, self);
-          
-        } else {
+          }, 3000, self);     
+        }
+        else {
           console.log('incorrect click non-strict');
           // TODO: blink '!!' timeout
           self.currentLevel = level;
