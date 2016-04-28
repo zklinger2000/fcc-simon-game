@@ -86,16 +86,23 @@ angular.module('Game', ['Grid'])
   // Check results of clicking a panel
   this.checkClick = function(answer, input) {
     var self = this;
+    var level = self.currentLevel;
     if (answer === input) {
       console.log('that was correct!');
-      if (clickResults.round < this.sequence.length - 1) {
+      if (clickResults.round < self.sequence.length - 1) {
         console.log('still another color in sequence');
-        this.startListening();
+        self.startListening();
         ++clickResults.round;
       } else {
         console.log('that was the last color!');
         clickResults.round = 0;
         // TODO: blink round timeout
+        $timeout(function() {
+          self.currentLevel = '--';
+        }, 500, self);
+        $timeout(function() {
+          self.currentLevel = level;
+        }, 1250, self);
         $timeout(function() {
           self.newRound();
         }, 2000, self);
