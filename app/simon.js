@@ -59,7 +59,6 @@ angular.module('Game', ['Grid'])
     this.isRunning = true;
     // Create a random sequence
     this.sequence = [];
-//    console.log(this.sequence);
     // TODO: Play blinking count
       // Set current level to 1
     // TODO: Start Game loop
@@ -74,22 +73,12 @@ angular.module('Game', ['Grid'])
     if (this.currentLevel === '--') {
       this.currentLevel = 1;
     } else {
+      // TODO: timeout level change
       ++this.currentLevel;
-    }
-//    var index = 0;
-//    var current = +this.currentLevel;
-    
+    }    
     playNext(this, grid, sequence);
-    // Listen for sequence click
-      // Listen for current index/color
-        // If not correct color
-          // If in strict mode, game over
-          // Else start over
-        // Else if is the correct color
-          // If it's the last item
-            // Update current level
-          // Else, update index to play
   };
+  // Check results of clicking a panel
   this.checkClick = function(answer, input) {
     if (answer === input) {
       console.log('that was correct!');
@@ -100,10 +89,20 @@ angular.module('Game', ['Grid'])
       } else {
         console.log('that was the last color!');
         clickResults.round = 0;
+        // TODO: blink round timeout
         this.newRound();
       }
     } else {
       console.log('incorrect click!!!');
+      self.isListening = false;
+      if (self.strict) {
+        console.log('incorrect click loss!');
+        self.currentLevel = '!!';
+      } else {
+        console.log('incorrect click non-strict');
+        // TODO: blink '!!' timeout
+        playNext(this, this.grid, this.sequence);        
+      }
     }
   };
   
@@ -134,9 +133,11 @@ angular.module('Game', ['Grid'])
       self.isListening = false;
       if (self.strict) {
         console.log('timeout loss!');
+        // TODO: blink '!!'
         self.currentLevel = '!!';
       } else {
         console.log('timeout non-strict');
+        // TODO: blink '!!'
         playNext(self, grid, sequence);        
       }
     }, 4000, self);
