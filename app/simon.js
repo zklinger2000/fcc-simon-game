@@ -144,6 +144,7 @@ angular.module('Game', ['Grid'])
         self.currentLevel = '!!';
       } else {
         console.log('timeout non-strict');
+        clickResults.round = 0;
         // TODO: blink '!!'
         playNext(self, grid, sequence);        
       }
