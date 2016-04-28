@@ -41,7 +41,7 @@
         </div>
         <div class="grid-container">
           <div class="panel" 
-            ng-repeat="panel in vm.game.grid track by $index" ng-class="{ 'active': (vm.game.grid[$index].isActive)}">
+            ng-repeat="panel in vm.game.grid track by $index" ng-class="{ 'active': (vm.game.grid[$index].isActive)}" ng-click="vm.game.panelClick(vm.game.grid[$index], $index)">
           </div>
         </div>
       </div>

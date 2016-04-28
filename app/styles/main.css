@@ -151,7 +151,7 @@
   border-bottom: 15px solid #222;
   border-right: 15px solid #222;
 }
-.panel:nth-child(1):active, .panel:nth-child(1).active {
+.panel:nth-child(1).active {
   background: #00ff00;
   box-shadow: -8px -8px 20px green, inset 0 0 15px 5px black;
 }
@@ -161,7 +161,7 @@
   border-bottom: 15px solid #222;
   border-left: 15px solid #222;
 }
-.panel:nth-child(2):active, .panel:nth-child(2).active {
+.panel:nth-child(2).active {
   background: red;
   box-shadow: 8px -8px 20px #882222, inset 0 0 15px 5px black;
 }
@@ -171,7 +171,7 @@
   border-top: 15px solid #222;
   border-right: 15px solid #222;
 }
-.panel:nth-child(3):active, .panel:nth-child(3).active {
+.panel:nth-child(3).active {
   background: #dddd22;
   box-shadow: -8px 8px 20px #888822, inset 0 0 15px 5px black;
 }
@@ -181,7 +181,7 @@
   border-top: 15px solid #222;
   border-left: 15px solid #222;
 }
-.panel:nth-child(4):active, .panel:nth-child(4).active {
+.panel:nth-child(4).active {
   background: #4444ff;
   box-shadow: 8px 8px 20px #2222aa, inset 0 0 15px 5px black;
 }

@@ -13,6 +13,7 @@ angular.module('Game', ['Grid'])
   this.sequence = [];
   var stopPlayback; // $interval promise
   var stopBlink; // $timeout promise
+  var roundTimeout; // $timeout promise
   
   // METHODS
   
@@ -21,6 +22,7 @@ angular.module('Game', ['Grid'])
     this.isOn = false;
     this.currentLevel = '--';
     this.isRunning = false;
+    this.isListening = false;
   }
   // Create a new game
   this.turnOn = function() {
@@ -50,27 +52,28 @@ angular.module('Game', ['Grid'])
     // Set game state to isRunning
     this.isRunning = true;
     // Create a random sequence
-    this.sequence = buildSequence(5);
+    this.sequence = [];
 //    console.log(this.sequence);
     // TODO: Play blinking count
       // Set current level to 1
     // TODO: Start Game loop
-    do {
-      this.gameLoop();
-    } while(!this.gameOver);
+    this.newRound();
   };
-  this.gameLoop = function() {
+  this.newRound = function() {
     console.log('CALLED: gameLoop');
     var grid = this.grid;
     var sequence = this.sequence;
+    sequence.push(addRound());
     // Play sequence up to current level
     if (this.currentLevel === '--') {
-      this.currentLevel = '01';
+      this.currentLevel = 1;
+    } else {
+      ++this.currentLevel;
     }
 //    var index = 0;
-    var current = +this.currentLevel;
+//    var current = +this.currentLevel;
     
-    playNext(grid, sequence);
+    playNext(this, grid, sequence);
     // Listen for sequence click
       // Listen for current index/color
         // If not correct color
@@ -80,21 +83,55 @@ angular.module('Game', ['Grid'])
           // If it's the last item
             // Update current level
           // Else, update index to play
-    this.gameOver = true;
+  };
+  this.checkClick = function(answer, input) {
+    if (answer === input) {
+      console.log('that was correct!');
+      if (clickResults.round < this.sequence.length - 1) {
+        console.log('still another color in sequence');
+        this.startListening();
+        ++clickResults.round;
+      } else {
+        console.log('that was the last color!');
+        clickResults.round = 0;
+        this.newRound();
+      }
+    } else {
+      console.log('incorrect click!!!');
+    }
+  };
+  
+  var clickResults = {
+    round: 0,
+    clicked: undefined
   };
   // Handle the push click action
-  this.panelClick = function(panel) {};
-  // Update the round number
-  this.updateRound = function() {};
+  this.panelClick = function(panel, index) {
+    if (this.isListening) {
+      console.log('clicked!!!!');
+      this.isListening = false;
+      blink(panel);
+      $timeout.cancel(roundTimeout);
+      roundTimeout = undefined;
+      var correctPanel = this.sequence[clickResults.round];
+      this.checkClick(correctPanel, index);
+//      var 
+    }
+  };
+  // Update the round timer and activate listener
+  this.startListening = function() {
+    var self = this;
+
+    self.isListening = true;
+    roundTimeout = $timeout(function() {
+      console.log('timeout loss!');
+      self.isListening = false;
+    }, 4000, self);
+  };
   
   // Create a random sequence of numbers between 0 and 3 inclusive
-  function buildSequence(size) {
-    var sequence = [];
-    for (var i = 0; i < size; i++) {
-      sequence.push(Math.floor(Math.random() * 4));
-    }
-    console.log(sequence);
-    return sequence;
+  function addRound() {
+    return Math.floor(Math.random() * 4);
   }
 
   function blink(panel) {
@@ -105,13 +142,16 @@ angular.module('Game', ['Grid'])
     }, 1000);
   }
   
-  function playNext(grid, sequence) {
+  function playNext(game, grid, sequence) {
     var i = 0;
     stopPlayback = $interval(function() {
       blink(grid[sequence[i]]);
       ++i;
       if (i >= sequence.length) {
         $interval.cancel(stopPlayback);
+        $timeout(function() {
+          game.startListening();
+        }, 1000, game);
       }
     }, 2000);
   }
