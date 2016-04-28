@@ -110,20 +110,41 @@ angular.module('Game', ['Grid'])
     } else {
       console.log('incorrect click!!!');
       // TODO: blink '!!' and play sound
-      audio[0].play();
-      audio[0].play();
-      this.isListening = false;
-      if (this.strict) {
-        console.log('incorrect click loss!');
-        this.currentLevel = '!!';
-      } else {
-        console.log('incorrect click non-strict');
-        // TODO: blink '!!' timeout
-        clickResults.round = 0;
-        playNext(this, this.grid, this.sequence);        
-      }
+      buzzer(self);
+      self.isListening = false;
+      $timeout(function() {
+        if (self.strict) {
+          console.log('incorrect click loss!');
+          self.currentLevel = '!!';
+          $timeout(function() {
+            self.turnOff();
+            self.turnOn();
+            self.startGame();
+          }, 3000, self);
+          
+        } else {
+          console.log('incorrect click non-strict');
+          // TODO: blink '!!' timeout
+          self.currentLevel = level;
+          clickResults.round = 0;
+          playNext(self, self.grid, self.sequence);        
+        }
+      }, 2000, self);
     }
   };
+  
+  function buzzer(game) {
+    game.currentLevel = '!!';
+    $timeout(function() {
+      game.currentLevel = '--';
+    }, 500, game);
+    $timeout(function() {
+      game.currentLevel = '!!';
+    }, 1000, game);
+    $timeout(function() {
+      game.currentLevel = '--';
+    }, 1500, game);
+  }
   
   var clickResults = {
     round: 0,
@@ -147,19 +168,31 @@ angular.module('Game', ['Grid'])
     var self = this;
     var grid = self.grid;
     var sequence = self.sequence;
+    var level = self.currentLevel;
     
     self.isListening = true;
     roundTimeout = $timeout(function() {
       self.isListening = false;
+      buzzer(self);
       if (self.strict) {
         console.log('timeout loss!');
         // TODO: blink '!!'
-        self.currentLevel = '!!';
+        $timeout(function() {
+          self.currentLevel = '!!';
+        }, 2000, self);
+        $timeout(function() {
+          self.turnOff();
+          self.turnOn();
+          self.startGame();
+        }, 3000, self);
       } else {
         console.log('timeout non-strict');
         clickResults.round = 0;
         // TODO: blink '!!'
-        playNext(self, grid, sequence);        
+        $timeout(function() {
+          self.currentLevel = level;
+          playNext(self, grid, sequence);        
+        }, 2000, self);
       }
     }, 4000, self);
   };
