@@ -14,7 +14,12 @@ angular.module('Game', ['Grid'])
   var stopPlayback; // $interval promise
   var stopBlink; // $timeout promise
   var roundTimeout; // $timeout promise
-  
+  var audio = [
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
+  ];
   // METHODS
   
   // Set game state to 'off'
@@ -94,13 +99,14 @@ angular.module('Game', ['Grid'])
       }
     } else {
       console.log('incorrect click!!!');
-      self.isListening = false;
-      if (self.strict) {
+      this.isListening = false;
+      if (this.strict) {
         console.log('incorrect click loss!');
-        self.currentLevel = '!!';
+        this.currentLevel = '!!';
       } else {
         console.log('incorrect click non-strict');
         // TODO: blink '!!' timeout
+        clickResults.round = 0;
         playNext(this, this.grid, this.sequence);        
       }
     }
@@ -116,6 +122,7 @@ angular.module('Game', ['Grid'])
       console.log('clicked!!!!');
       this.isListening = false;
       blink(panel);
+      audio[index].play();
       $timeout.cancel(roundTimeout);
       roundTimeout = undefined;
       var correctPanel = this.sequence[clickResults.round];
@@ -160,6 +167,7 @@ angular.module('Game', ['Grid'])
     var i = 0;
     stopPlayback = $interval(function() {
       blink(grid[sequence[i]]);
+      audio[sequence[i]].play();
       ++i;
       if (i >= sequence.length) {
         $interval.cancel(stopPlayback);
