@@ -23,7 +23,9 @@ angular.module('Game', ['Grid'])
     this.currentLevel = '--';
     this.isRunning = false;
     this.isListening = false;
-  }
+    this.strict = false;
+    $timeout.cancel(roundTimeout);
+  };
   // Create a new game
   this.turnOn = function() {
     this.gameOver = false;
@@ -31,7 +33,7 @@ angular.module('Game', ['Grid'])
     this.isOn = true;
     this.strict = false;
     // TODO: create color sequence
-  }
+  };
   // Toggle game state between on/off
   this.onOffToggle = function() {
     if (this.isOn) {
@@ -42,7 +44,11 @@ angular.module('Game', ['Grid'])
     } else {
       this.turnOn();
     }
-  }
+  };
+  this.strictToggle = function() {
+    if (!this.isOn) return;
+    this.strict = !this.strict;
+  };
   // Start a new game
   this.startGame = function() {
     // Disable button if game is off
@@ -115,17 +121,24 @@ angular.module('Game', ['Grid'])
       roundTimeout = undefined;
       var correctPanel = this.sequence[clickResults.round];
       this.checkClick(correctPanel, index);
-//      var 
     }
   };
   // Update the round timer and activate listener
   this.startListening = function() {
     var self = this;
-
+    var grid = self.grid;
+    var sequence = self.sequence;
+    
     self.isListening = true;
     roundTimeout = $timeout(function() {
-      console.log('timeout loss!');
       self.isListening = false;
+      if (self.strict) {
+        console.log('timeout loss!');
+        self.currentLevel = '!!';
+      } else {
+        console.log('timeout non-strict');
+        playNext(self, grid, sequence);        
+      }
     }, 4000, self);
   };
   

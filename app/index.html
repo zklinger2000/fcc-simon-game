@@ -27,8 +27,8 @@
             <p>START</p>
           </div>
           <div class="strict-container">
-            <div class="strict-mode"></div>
-            <div class="btn strict"></div>
+            <div class="strict-mode" ng-class="{ 'strict': vm.game.strict }"></div>
+            <div class="btn strict" ng-click="vm.game.strictToggle()"></div>
             <p>STRICT</p>
           </div>
           <div class="on-off-container">
